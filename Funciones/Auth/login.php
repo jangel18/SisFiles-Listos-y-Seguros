@@ -1,43 +1,40 @@
 <?php
 
-include('../../Config\db.php')
+include('../../Config\db.php');
+// Iniciar sesión
+session_start();
 
+// Comprobar si el formulario se ha enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usuario = $_POST['user'];
+    $usuario = $_POST['usuario'];
     $password = $_POST['password'];
 
-    $sql_check_usuario = "SELECT id FROM usuarios WHERE usuario = ?";
-    $stmt_check_usuario = $conn->prepare($sql_check_usuario);
-    $stmt_check_usuario->bind_param("s", $usuario);
-    $stmt_check_usuario->execute();
-    $result = $stmt_check_usuario->get_result();
+    // Buscar al usuario en la base de datos por el correo electrónico
+    $sql = "SELECT id, usuario, password FROM usuarios WHERE usuario = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $usuario);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Si el correo ya existe, mostrar un mensaje de error
-        echo "El usario ya está registrado, vuelve a registrarte con un usario distnito.";
-    } else {
+        $user = $result->fetch_assoc();
 
+        // Verificar la contraseña (usa password_hash en producción)
+        if ($password == $user['password']) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_usuario'] = $user['usuario'];
+            
 
-        // Preparar la consulta de inserción
-        $sql_insert = "INSERT INTO ususarios (name, password) VALUES (?, ?)";
-        $stmt_insert = $conn->prepare($sql_insert);
-        $stmt_insert->bind_param("ss", $usuario, $password);
-
-        if ($stmt_insert->execute()) {
-
-            // Redirigir a la página de login (opcional)
-            header("Location: ../../Vistas/Compartidos/Auth/Login.html");
+            // Redirigir a la página principal
+            header("Location: ../../Vistas/Compartidos/PaginaVentas/Inicio.php");
+            exit();
         } else {
-            echo "Error al registrar el usuario: " . $stmt_insert->error;
+            echo '<div class="alert alert-danger" role="alert">La contraseña es incorrecta.</div>';
         }
-
-        // Cerrar la declaración
-        $stmt_insert->close();
+    } else {
+        echo '<div class="alert alert-danger" role="alert">El usuario no está registrado.</div>';
     }
 
-    // Cerrar la conexión
-    $stmt_check_email->close();
+    $stmt->close();
     $conn->close();
 }
-
-?>
