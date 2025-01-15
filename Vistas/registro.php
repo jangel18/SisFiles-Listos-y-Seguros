@@ -24,6 +24,11 @@
     </form>
     <div id="responseMessage"></div>
     <script>
+          function redirigirPagina(url) {
+            setTimeout(function() {
+            window.location.href = url;
+            }, 1500); // 3000 milisegundos = 3 segundos
+            }
           $(document).ready(function() {
             $('#registroForm').on('submit', function(event) {
                 event.preventDefault(); // Evitar recarga de página
@@ -36,25 +41,26 @@
 
                 // Enviar los datos al servidor
                 $.ajax({
-                    url: '../Funciones/Auth/registrofun.php', // Ruta al archivo PHP
-                    method: 'POST',
-                    data: formData,
-                    dataType: 'json',
-                    success: function(response) {
-                        // Mostrar el mensaje de respuesta
-                        if (response.status === 'success') {
-                            $('#responseMessage').html('<div style="color: green;">' + response.message + '</div>');
-                            $('#registroForm')[0].reset(); // Limpiar el formulario
-                        } else {
-                            $('#responseMessage').html('<div style="color: red;">' + response.message + '</div>');
-                        }
-                    },
-                    error: function() {
-                        $('#responseMessage').html('<div style="color: red;">Error al procesar la solicitud.</div>');
+                url: '../Funciones/Auth/registrofun.php', // Ajusta la ruta si es necesario
+                method: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        $('#responseMessage').html('<div style="color: green;">' + response.message + '</div>');
+                        $('#registroForm')[0].reset(); // Limpiar el formulario
+                        redirigirPagina("login.php");
+                    } else {
+                        $('#responseMessage').html('<div style="color: red;">' + response.message + '</div>');
                     }
-                });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", status, error);
+                    $('#responseMessage').html('<div style="color: red;">Error al procesar la solicitud.</div>');
+                }
             });
         });
+    });
     </script>
     <a href="login.html">¿Usted ya esta registrado?,Inicie sesion aqui</a>
 </body>

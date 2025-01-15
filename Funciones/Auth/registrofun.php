@@ -1,13 +1,32 @@
 <?php
-
 include('../../Config/db.php');
 
+// Verificar que la solicitud sea POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usuario = $_POST['usuario'];
-    $password = $_POST['password'];
-
-    // Respuesta JSON inicial
+    // Inicializar respuesta
     $response = [];
+
+    // Verificar conexión a la base de datos
+    if (!$conn) {
+        $response['status'] = 'error';
+        $response['message'] = 'Error de conexión a la base de datos.';
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit();
+    }
+
+    // Capturar datos del formulario
+    $usuario = trim($_POST['usuario']);
+    $password = trim($_POST['password']);
+
+    // Validar que los campos no estén vacíos
+    if (empty($usuario) || empty($password)) {
+        $response['status'] = 'error';
+        $response['message'] = 'Todos los campos son obligatorios.';
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit();
+    }
 
     // Verificar si el usuario ya existe
     $sql_check = "SELECT id FROM usuarios WHERE usuario = ?";
@@ -20,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['status'] = 'error';
         $response['message'] = 'El usuario ya está registrado.';
     } else {
-        // Hashear la contraseña antes de guardarla
+        // Hashear la contraseña
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Insertar nuevo usuario
@@ -39,7 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Cerrar las conexiones
     $stmt_check->close();
-    $stmt_insert->close();
+    if (isset($stmt_insert)) {
+        $stmt_insert->close();
+    }
     $conn->close();
 
     // Enviar respuesta JSON
@@ -47,3 +68,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo json_encode($response);
     exit();
 }
+
+// Respuesta para solicitudes no POST
+$response = [
+    'status' => 'error',
+    'message' => 'Método no permitido.'
+];
+header('Content-Type: application/json');
+echo json_encode($response);
+exit();
