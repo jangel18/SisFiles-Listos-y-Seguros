@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql_insert = "INSERT INTO usuarios (usuario, password) VALUES (?, ?)";
         $stmt_insert = $conn->prepare($sql_insert);
         $stmt_insert->bind_param("ss", $usuario, $hashed_password);
-
+        //
         if ($stmt_insert->execute()) {
             $response['status'] = 'success';
             $response['message'] = 'Usuario registrado exitosamente.';
