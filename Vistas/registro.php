@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="styles/styles.css">
+
 </head>
 <body>
     <!--  a -->
@@ -62,6 +64,7 @@
         });
     });
     </script>
+    <br>
     <a href="login.php">¿Usted ya esta registrado?,Inicie sesion aqui</a>
 </body>
 </html>
