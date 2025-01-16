@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['message'] = 'El usuario ya está registrado.';
     } else {
         // Hashear la contraseña
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $hashed_password = $password;
 
         // Insertar nuevo usuario
         $sql_insert = "INSERT INTO usuarios (usuario, password) VALUES (?, ?)";
@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt_insert->execute()) {
             $response['status'] = 'success';
             $response['message'] = 'Usuario registrado exitosamente.';
+            
         } else {
             $response['status'] = 'error';
             $response['message'] = 'Error al registrar el usuario.';

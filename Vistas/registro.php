@@ -62,6 +62,6 @@
         });
     });
     </script>
-    <a href="login.html">¿Usted ya esta registrado?,Inicie sesion aqui</a>
+    <a href="login.php">¿Usted ya esta registrado?,Inicie sesion aqui</a>
 </body>
 </html>
