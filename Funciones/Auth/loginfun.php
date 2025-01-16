@@ -1,15 +1,11 @@
 <?php
-
 include('../../Config/db.php');
-// Iniciar sesión
 session_start();
 
-// Comprobar si el formulario se ha enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
 
-    // Buscar al usuario en la base de datos por el correo electrónico
     $sql = "SELECT id, usuario, password FROM usuarios WHERE usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $usuario);
@@ -19,22 +15,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        // Verificar la contraseña (usa password_hash en producción)
         if ($password == $user['password']) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_usuario'] = $user['usuario'];
-            
 
-            // Redirigir a la página principal
-            header("Location: ../../Vistas/Compartidos/PaginaVentas/Inicio.php");
-            exit();
+            echo json_encode([
+                "success" => true,
+                "redirect" => "../../Vistas/Compartidos/PaginaVentas/Inicio.php"
+            ]);
         } else {
-            echo '<div class="alert alert-danger" role="alert">La contraseña es incorrecta.</div>';
+            echo json_encode([
+                "success" => false,
+                "message" => "La contraseña es incorrecta."
+            ]);
         }
     } else {
-        echo '<div class="alert alert-danger" role="alert">El usuario no está registrado.</div>';
+        echo json_encode([
+            "success" => false,
+            "message" => "El usuario no está registrado."
+        ]);
     }
 
     $stmt->close();
     $conn->close();
+    exit();
+} else {
+    echo json_encode([
+        "success" => false,
+        "message" => "Método no permitido."
+    ]);
+    exit();
 }
+?>
