@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($password == $user['password']) {
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_usuario'] = $user['usuario'];
+            $_SESSION['user_name'] = $user['usuario'];
             $_SESSION['estado'] = 'Autenticado';
 
             echo json_encode([
