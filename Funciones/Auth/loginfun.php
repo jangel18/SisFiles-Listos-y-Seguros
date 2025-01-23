@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             echo json_encode([
                 "success" => true,
-                "redirect" => "../../Vistas/Compartidos/PaginaVentas/Inicio.php"
+                "redirect" => "../../Vistas/index.php"
             ]);
         } else {
             echo json_encode([
