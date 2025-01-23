@@ -1,11 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+<?php 
+session_start();
+
+//Evitamos que nos salgan los NOTICES de PHP
+error_reporting(E_ALL ^ E_NOTICE);
+
+//Comprobamos si la sesión está iniciada
+//Si existe una sesión correcta, mostramos la página para los usuarios
+//Sino, mostramos la página de acceso y registro de usuarios
+if(isset($_SESSION['user_usuario']) and $_SESSION['estado'] == 'Autenticado') {
+	include('Usuario/paginauser.php');
+	$nombreUsuario = htmlspecialchars($_SESSION['user_usuario']);
+	die();
+} else {
+	include('Auth/login.php');
+	die();
+};
+
+?>
