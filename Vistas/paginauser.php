@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Hola <?php echo $_SESSION['user_usuario']; ?>, este es el inicio de sesion</h1>
+    <a href="../Funciones/Sesion/cerrar_sesion.php">Cerrar Sesión</a>
 </body>
 </html>
