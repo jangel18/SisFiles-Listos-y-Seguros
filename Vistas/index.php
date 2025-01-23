@@ -8,11 +8,11 @@ error_reporting(E_ALL ^ E_NOTICE);
 //Si existe una sesión correcta, mostramos la página para los usuarios
 //Sino, mostramos la página de acceso y registro de usuarios
 if(isset($_SESSION['user_usuario']) and $_SESSION['estado'] == 'Autenticado') {
-	include('paginauser.php');
+	include('Usuario/paginauser.php');
 	$nombreUsuario = htmlspecialchars($_SESSION['user_usuario']);
 	die();
 } else {
-	include('login.php');
+	include('Auth/login.php');
 	die();
 };
 

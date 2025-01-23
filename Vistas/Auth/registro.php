@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 
 </head>
 <body>
     <!--  a -->
-    <form action="../Funciones/Auth/registrofun.php" method="POST" id="registroForm">
+    <div><img src="../../Public/Storage\124837.png" alt="" width="100" height="100"><h1>SisFiles</h1>
+    </div>
+    <div>
+    <h1>Registro</h1>
+    <form action="../../Funciones/Auth/registrofun.php" method="POST" id="registroForm">
         <div class="form-group">
             <label for="usuario">Usuario</label>
             <input type="usuario" class="form-control" id="usuario" name="usuario" required>
@@ -43,7 +47,7 @@
 
                 // Enviar los datos al servidor
                 $.ajax({
-                url: '../Funciones/Auth/registrofun.php', // Ajusta la ruta si es necesario
+                url: '../../Funciones/Auth/registrofun.php', // Ajusta la ruta si es necesario
                 method: 'POST',
                 data: formData,
                 dataType: 'json',
@@ -51,7 +55,7 @@
                     if (response.status === 'success') {
                         $('#responseMessage').html('<div style="color: green;">' + response.message + '</div>');
                         $('#registroForm')[0].reset(); // Limpiar el formulario
-                        redirigirPagina("login.php");
+                        redirigirPagina("../index.php");
                     } else {
                         $('#responseMessage').html('<div style="color: red;">' + response.message + '</div>');
                     }
@@ -65,6 +69,6 @@
     });
     </script>
     <br>
-    <a href="login.php">¿Usted ya esta registrado?,Inicie sesion aqui</a>
+    <a href="../index.php">¿Usted ya esta registrado?,Inicie sesion aqui</a>
 </body>
 </html>
