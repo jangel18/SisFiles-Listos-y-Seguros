@@ -1,5 +1,6 @@
 <?php
 include('../../Config/db.php');
+include('../Archivos/Crear_carpeta_user.php');
 
 // Verificar que la solicitud sea POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -46,7 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql_insert = "INSERT INTO usuarios (usuario, password) VALUES (?, ?)";
         $stmt_insert = $conn->prepare($sql_insert);
         $stmt_insert->bind_param("ss", $usuario, $hashed_password);
-        //
+        crear_carpeta_user($usuario);
+        
         if ($stmt_insert->execute()) {
             $response['status'] = 'success';
             $response['message'] = 'Usuario registrado exitosamente.';
