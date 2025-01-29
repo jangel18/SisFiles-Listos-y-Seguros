@@ -16,13 +16,7 @@
     <input type="file" id="fileInput" name="archivo">
     <input type="submit" id="uploadButton"name="subir">Subir</input>
   </form>
-  <table>
-    <tr>
-      <th>nro</th>
-      <th>nombre</th>
-      <th></th>
-    </tr>
-  </table>
+  
 
   <!-- Botón para crear carpetas -->
   <button id="createFolderButton">Crear Carpeta</button>
@@ -31,7 +25,41 @@
   <div id="fileManager">
     <h2>Archivos y Carpetas</h2>
     <ul id="fileList">
-      <!-- Aquí se generarán dinámicamente los archivos y carpetas -->
+    <?php
+include('../Config/db.php');
+
+$sql = "SELECT id, name, size, date_creation, date_update FROM files";
+$result = $conn->query($sql);
+?>
+
+<table border="1">
+    <tr>
+        <th>Nro</th>
+        <th>Nombre</th>
+        <th>Tamaño (KB)</th>
+        <th>Fecha de Creación</th>
+        <th>Última Actualización</th>
+    </tr>
+    
+    <?php
+    if ($result->num_rows > 0) {
+        $nro = 1;
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                <td>{$nro}</td>
+                <td>{$row['name']}</td>
+                <td>" . number_format($row['size'] / 1024, 2) . " KB</td>
+                <td>{$row['date_creation']}</td>
+                <td>{$row['date_update']}</td>
+            </tr>";
+            $nro++;
+        }
+    } else {
+        echo "<tr><td colspan='5'>No hay archivos disponibles</td></tr>";
+    }
+    ?>
+</table>
+<!-- Aquí se generarán dinámicamente los archivos y carpetas -->
     </ul>
   </div>
 
