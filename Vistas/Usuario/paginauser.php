@@ -16,6 +16,13 @@
     <input type="file" id="fileInput" name="archivo">
     <input type="submit" id="uploadButton"name="subir">Subir</input>
   </form>
+  <table>
+    <tr>
+      <th>nro</th>
+      <th>nombre</th>
+      <th></th>
+    </tr>
+  </table>
 
   <!-- Botón para crear carpetas -->
   <button id="createFolderButton">Crear Carpeta</button>
