@@ -28,8 +28,27 @@
     <?php
 include('../Config/db.php');
 
-$sql = "SELECT id, name, size, date_creation, date_update FROM files";
-$result = $conn->query($sql);
+$username = $_SESSION['user_name'];
+
+$sql = "SELECT id, name, size, date_creation, date_update 
+        FROM files 
+        WHERE route LIKE CONCAT('../../Public/Storage/files/', ?, '/%')";
+
+// Preparar la consulta
+$stmt = $conn->prepare($sql);
+
+if ($stmt === false) {
+    die("Error en la consulta: " . $conn->error);
+}
+
+// Vincular parámetro (s = string)
+$stmt->bind_param("s", $username);
+
+// Ejecutar
+$stmt->execute();
+
+// Obtener resultados
+$result = $stmt->get_result();
 ?>
 
 <table border="1">
