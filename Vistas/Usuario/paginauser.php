@@ -1,10 +1,22 @@
+<?php 
+session_start();
+$username = $_SESSION['user_name'];
 
+if(isset($_SESSION['carpeta'])){
+$_SESSION['ruta']='../../Public/Storage/files/'.$username.$_SESSION['carpeta'];}
+else{$_SESSION['ruta']='../../Public/Storage/files/'.$username.'';}
+$ruta=$_SESSION['ruta'];
+echo $ruta;
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles/stylesicons.css" />
     
 </head>
 <body>
@@ -19,20 +31,37 @@
   
 
   <!-- Botón para crear carpetas -->
-  <button id="createFolderButton">Crear Carpeta</button>
+  <form method="POST"action="../../Funciones/Archivos/Crear_carpeta.php">
+  <input type="text" name="nombre" placeholder="Nombrar archivo">
+  <input type="submit" id="createFolderButton" name="subir">Crear Carpeta</input>
+  </form>
 
   <!-- Lista de archivos y carpetas -->
   <div id="fileManager">
     <h2>Archivos y Carpetas</h2>
-    <ul id="fileList">
     <?php
-include('../Config/db.php');
+    if(isset($_SESSION['carpeta'])){
+    echo '<a href="../../Funciones/Archivos/regresar_carpeta.php">volver a la anterior carpeta</a>';
+    echo  $_SESSION['carpeta'];
+        }?>
+    <ul id="fileList">
+<?php
+    include('../Config/db.php');
 
-$username = $_SESSION['user_name'];
 
-$sql = "SELECT id, name, size, date_creation, date_update 
-        FROM files 
-        WHERE route LIKE CONCAT('../../Public/Storage/files/', ?, '/%')";
+
+$sql = "SELECT id, name, size, date_creation, date_update, 'Archivo' AS tipo
+FROM files 
+WHERE route LIKE CONCAT(?, '/%')
+  AND route NOT LIKE CONCAT(?, '/%/%')
+
+UNION ALL
+
+SELECT id, carpeta AS name, 0 AS size, fecha AS date_creation, fecha AS date_update, 'Carpeta' AS tipo
+FROM carpetas  
+WHERE route LIKE CONCAT(?, '/%') 
+  AND route NOT LIKE CONCAT(?, '/%/%');
+";
 
 // Preparar la consulta
 $stmt = $conn->prepare($sql);
@@ -42,7 +71,7 @@ if ($stmt === false) {
 }
 
 // Vincular parámetro (s = string)
-$stmt->bind_param("s", $username);
+$stmt->bind_param('ssss', $ruta, $ruta, $ruta, $ruta);
 
 // Ejecutar
 $stmt->execute();
@@ -53,7 +82,9 @@ $result = $stmt->get_result();
 
 <table border="1">
     <tr>
+        
         <th>Nro</th>
+        <th>Tipo</th>
         <th>Nombre</th>
         <th>Tamaño (KB)</th>
         <th>Fecha de Creación</th>
@@ -65,16 +96,41 @@ $result = $stmt->get_result();
         $nro = 1;
         while ($row = $result->fetch_assoc()) {
             echo "<tr>
-                <td>{$nro}</td>
-                <td>{$row['name']}</td>
-                <td>" . number_format($row['size'] / 1024, 2) . " KB</td>
-                <td>{$row['date_creation']}</td>
+                <td>{$nro}</td>";
+                if ($row['tipo'] === 'Carpeta') {
+                    echo "<td><img class='icon' src='../Public/Storage/3516096.png' alt='MDN'/>
+                        
+                    </td>";
+                } else {
+                    echo "<td><img class='icon2' src='../Public/Storage/304579.png' alt='MDN'/> </td>";
+                }
+               
+                if ($row['tipo'] === 'Carpeta') {
+                    echo "<td>
+                        <form method='post' action='../Funciones/Archivos/navegar.php'>
+                            
+                            <input type='hidden' name='carpeta_name' value='" . htmlspecialchars($row['name']) . "'>
+                            <button type='submit' name='navegar' class='btn-carpeta'>
+                                " . htmlspecialchars($row['name']) . "
+                            </button>
+                        </form>
+                    </td>";
+                } else {
+                    echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+                }
+            
+                if ($row['tipo'] === 'Archivo') {
+                    echo "   <td>" . number_format($row['size'] / 1024, 2) . " KB</td>";}
+                    else{echo "<td></td>";}
+                echo "<td>{$row['date_creation']}</td>
                 <td>{$row['date_update']}</td>
             </tr>";
             $nro++;
         }
     } else {
-        echo "<tr><td colspan='5'>No hay archivos disponibles</td></tr>";
+        echo "<tr>
+        
+                <td colspan='5'>No hay archivos disponibles</td></tr>";
     }
     ?>
 </table>
