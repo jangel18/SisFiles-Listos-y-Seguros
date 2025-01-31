@@ -17,6 +17,8 @@ echo $ruta;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles/stylesicons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     
 </head>
 <body>
@@ -50,14 +52,14 @@ echo $ruta;
 
 
 
-$sql = "SELECT id, name, size, date_creation, date_update, 'Archivo' AS tipo
+$sql = "SELECT id, name, size, date_creation, date_update, 'Archivo' AS tipo,favorite,route 
 FROM files 
 WHERE route LIKE CONCAT(?, '/%')
   AND route NOT LIKE CONCAT(?, '/%/%')
 
 UNION ALL
 
-SELECT id, carpeta AS name, 0 AS size, fecha AS date_creation, fecha AS date_update, 'Carpeta' AS tipo
+SELECT id, carpeta AS name, 0 AS size, fecha AS date_creation, fecha AS date_update, 'Carpeta' AS tipo,favorite,route 
 FROM carpetas  
 WHERE route LIKE CONCAT(?, '/%') 
   AND route NOT LIKE CONCAT(?, '/%/%');
@@ -89,7 +91,8 @@ $result = $stmt->get_result();
         <th>Tamaño (KB)</th>
         <th>Fecha de Creación</th>
         <th>Última Actualización</th>
-        <th></th>
+        <th>Favorito</th>
+        <th>Eliminar</th>
     </tr>
     
     <?php
@@ -123,10 +126,35 @@ $result = $stmt->get_result();
                 if ($row['tipo'] === 'Archivo') {
                     echo "   <td>" . number_format($row['size'] / 1024, 2) . " KB</td>";}
                     else{echo "<td></td>";}
-                echo "<td>{$row['date_creation']}</td>
-                <td>{$row['date_update']}</td>
-                    <td></td>
-                </tr>";
+                    echo "<td>{$row['date_creation']}</td>
+                        <td>{$row['date_update']}</td>
+                        <td>  
+                            <form method='POST' action='../Funciones/Archivos/favorite.php'>";
+
+                    // Verifica si es favorito (NULL o 0 significa que no es favorito)
+                    if ($row['favorite'] == 'favorite') {
+                        echo "<button type='submit' class='favorite' name='favorite' value='NULL'>
+                                <input type='hidden' name='ruta' value='" . htmlspecialchars($row['route']) . "'> 
+                        <i class='fa-solid fa-star' style='color: gold;'></i>"; // ⭐ Estrella dorada
+                    } else {
+                        echo "<button type='submit' class='favorite' name='favorite' value='favorite'>
+                                <input type='hidden' name='ruta' value='" . htmlspecialchars($row['route']) . "'> 
+                        <i class='fa-regular fa-star' style='color: gray;'></i>"; // ☆ Estrella vacía
+                    }
+
+                    echo "    </button>  
+                            </form>
+                        </td>
+                        
+                        <td>
+                            <form method='POST' action='../Funciones/Archivos/eliminar.php'>
+                                <button type='submit' class='delete' name='boton' value='delete'>
+                                    <i class='fa-solid fa-trash'></i> <!-- 🗑 Ícono de basura -->
+                                </button>
+                            </form>
+                        </td>
+                        </tr>";
+
             $nro++;
         }
     } else {

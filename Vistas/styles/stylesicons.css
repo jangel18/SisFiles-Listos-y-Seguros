@@ -3,4 +3,37 @@
 }
 .icon2{
     position: relative;width:40px; image-resolution:300dpi;  left:7px ;
+}.favorite, .delete {
+    width: 40px;
+    height: 40px;
+    background-size: contain; /* Ajusta la imagen dentro del botón */
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none; /* Quita el borde predeterminado */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+}
+
+/* Establece la imagen de fondo para cada botón */
+.favorite, .delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 40px; /* Tamaño del ícono */
+    padding: 5px;
+}
+
+.favorite {
+    color: gold; /* Color amarillo para favoritos */
+}
+
+.delete {
+    color: red; /* Color rojo para eliminar */
+}
+
+.favorite:hover {
+    color: orange; /* Cambio de color al pasar el mouse */
+}
+
+.delete:hover {
+    color: darkred;
 }
