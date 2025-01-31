@@ -89,6 +89,7 @@ $result = $stmt->get_result();
         <th>Tamaño (KB)</th>
         <th>Fecha de Creación</th>
         <th>Última Actualización</th>
+        <th></th>
     </tr>
     
     <?php
@@ -124,7 +125,8 @@ $result = $stmt->get_result();
                     else{echo "<td></td>";}
                 echo "<td>{$row['date_creation']}</td>
                 <td>{$row['date_update']}</td>
-            </tr>";
+                    <td></td>
+                </tr>";
             $nro++;
         }
     } else {
