@@ -148,7 +148,8 @@ $result = $stmt->get_result();
                         
                         <td>
                             <form method='POST' action='../Funciones/Archivos/eliminar.php'>
-                                <button type='submit' class='delete' name='boton' value='delete'>
+                                <input type='hidden' name='tipo' value='" . htmlspecialchars($row['tipo']) . "'> 
+                                <button type='submit' class='delete' name='ruta' value='" . htmlspecialchars($row['route']) . "'>
                                     <i class='fa-solid fa-trash'></i> <!-- 🗑 Ícono de basura -->
                                 </button>
                             </form>
