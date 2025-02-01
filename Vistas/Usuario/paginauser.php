@@ -17,6 +17,7 @@ echo $ruta;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles/stylesicons.css" />
+    <!--    fontawesome   --> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     
@@ -132,12 +133,12 @@ $result = $stmt->get_result();
                             <form method='POST' action='../Funciones/Archivos/favorite.php'>";
 
                     // Verifica si es favorito (NULL o 0 significa que no es favorito)
-                    if ($row['favorite'] == 'favorite') {
-                        echo "<button type='submit' class='favorite' name='favorite' value='NULL'>
+                    if ($row['favorite'] == true) {
+                        echo "<button type='submit' class='favorite' name='favorite' value='false'>
                                 <input type='hidden' name='ruta' value='" . htmlspecialchars($row['route']) . "'> 
                         <i class='fa-solid fa-star' style='color: gold;'></i>"; // ⭐ Estrella dorada
                     } else {
-                        echo "<button type='submit' class='favorite' name='favorite' value='favorite'>
+                        echo "<button type='submit' class='favorite' name='favorite' value='true'>
                                 <input type='hidden' name='ruta' value='" . htmlspecialchars($row['route']) . "'> 
                         <i class='fa-regular fa-star' style='color: gray;'></i>"; // ☆ Estrella vacía
                     }
