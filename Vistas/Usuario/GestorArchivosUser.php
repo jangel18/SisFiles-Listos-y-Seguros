@@ -6,6 +6,7 @@ if(isset($_SESSION['carpeta'])){
 $_SESSION['ruta']='../../Public/Storage/files/'.$username.$_SESSION['carpeta'];}
 else{$_SESSION['ruta']='../../Public/Storage/files/'.$username.'';}
 $ruta=$_SESSION['ruta'];
+
 echo $ruta;
 
 
@@ -16,7 +17,7 @@ echo $ruta;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="styles/stylesicons.css" />
+    <link rel="stylesheet" href="styles/icons/color_icons.css" />
     <!--    fontawesome   --> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -35,7 +36,7 @@ echo $ruta;
 
   <!-- Botón para crear carpetas -->
   <form method="POST"action="../../Funciones/Archivos/Crear_carpeta.php">
-  <input type="text" name="nombre" placeholder="Nombrar archivo">
+  <input type="text" name="nombre" placeholder="Nombrar carpeta">
   <input type="submit" id="createFolderButton" name="subir">Crear Carpeta</input>
   </form>
 
