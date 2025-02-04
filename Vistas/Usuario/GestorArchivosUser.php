@@ -1,5 +1,6 @@
 <?php 
 session_start();
+
 $username = $_SESSION['user_name'];
 
 if(isset($_SESSION['carpeta'])){
@@ -121,7 +122,12 @@ $result = $stmt->get_result();
                         </form>
                     </td>";
                 } else {
-                    echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+                    echo "<td>
+                        <form method='post' action='../Funciones/Archivos/descargar_archivos.php'>
+                            <input type='hidden' name='route' value='" . htmlspecialchars($row['route']) . "'>
+                            <button type='submit' name='navegar' class='btn-carpeta'>
+                                " . htmlspecialchars($row['name']) . "
+                            </button> </form> </td>";
                 }
             
                 if ($row['tipo'] === 'Archivo') {
