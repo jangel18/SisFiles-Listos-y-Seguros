@@ -1,0 +1,15 @@
+th[data-type]::after {
+    content: ' ↕';
+    font-size: 0.8em;
+    color: #666;
+}
+
+th.sorted-asc::after {
+    content: ' ▲';
+    color: #000;
+}
+
+th.sorted-desc::after {
+    content: ' ▼';
+    color: #000;
+}
