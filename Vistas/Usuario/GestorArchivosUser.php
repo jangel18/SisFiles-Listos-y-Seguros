@@ -1,5 +1,6 @@
 <?php 
 session_start();
+
 $username = $_SESSION['user_name'];
 
 if(isset($_SESSION['carpeta'])){
@@ -95,6 +96,7 @@ $result = $stmt->get_result();
         <th data-type="string">Fecha de Creación</th>
         <th data-type="string">Última Actualización</th>
         <th data-type="string">Favorito</th>
+        <th>Descargar</th>
         <th>Eliminar</th>
     </tr>
     </thead>
@@ -121,7 +123,7 @@ $result = $stmt->get_result();
                         </form>
                     </td>";
                 } else {
-                    echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+                    echo "<td> " . htmlspecialchars($row['name']) . "</td>";
                 }
             
                 if ($row['tipo'] === 'Archivo') {
@@ -147,6 +149,15 @@ $result = $stmt->get_result();
                 }
 
                 echo "</form>
+                    
+                    </td>
+                    <td>
+                        <form method='post' action='../Funciones/Archivos/descargar_archivos.php'>
+                            <input type='hidden' name='route' value='" . htmlspecialchars($row['route']) . "'>
+                            <button type='hidden' name='tipo' class='download' value='" . htmlspecialchars($row['tipo']) . "'>
+                            <i class='fa-solid fa-download'></i>
+                            </button>
+                         </form>   
                     </td>
                     <td>
                         <form method='POST' action='../Funciones/Archivos/eliminar.php'>

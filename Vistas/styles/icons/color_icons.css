@@ -3,7 +3,7 @@
 }
 .icon2{
     position: relative;width:40px; image-resolution:300dpi;  left:7px ;
-}.favorite, .delete {
+}.favorite, .delete, .download {
     width: 40px;
     height: 40px;
     background-size: contain; /* Ajusta la imagen dentro del botón */
@@ -14,7 +14,7 @@
 }
 
 /* Establece la imagen de fondo para cada botón */
-.favorite, .delete {
+.favorite, .delete, .download {
     background: none;
     border: none;
     cursor: pointer;
