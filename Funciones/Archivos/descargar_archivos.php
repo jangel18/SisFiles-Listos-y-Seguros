@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $file = $_POST['route'] ?? '';
 $tipo = $_POST['tipo'] ?? '';
@@ -29,8 +29,7 @@ if ($tipo == 'Archivo') {
     header('Content-Length: ' . filesize($file));
     readfile($file);
     exit;
-} 
-elseif ($tipo == 'Carpeta') {
+} elseif ($tipo == 'Carpeta') {
     $zip = new ZipArchive();
     $zipname = "files_selected.zip";
 
@@ -39,7 +38,8 @@ elseif ($tipo == 'Carpeta') {
     }
 
     // Función recursiva para agregar archivos y carpetas al ZIP
-    function agregarCarpetaAlZip($zip, $folder, $relativePath = '') {
+    function agregarCarpetaAlZip($zip, $folder, $relativePath = '')
+    {
         $files = array_diff(scandir($folder), array('.', '..'));
 
         foreach ($files as $fileunit) {
@@ -76,5 +76,3 @@ elseif ($tipo == 'Carpeta') {
     unlink($zipname); // Eliminar el ZIP después de descargarlo
     exit;
 }
-
-?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include('../../Config/db.php');
 $tipo = $_POST['tipo'];

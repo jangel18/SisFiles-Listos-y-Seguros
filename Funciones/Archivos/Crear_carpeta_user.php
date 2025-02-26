@@ -1,5 +1,6 @@
 <?php
-function crear_carpeta_user($usuario) {
+function crear_carpeta_user($usuario)
+{
     // Ruta base donde se crearán las carpetas
     $rutaBase = "../../Public/Storage/files";
     $rutaCompleta = $rutaBase . "/" . $usuario;
@@ -14,4 +15,3 @@ function crear_carpeta_user($usuario) {
     }
     return true; // La carpeta ya existe, no es necesario crearla
 }
-?>

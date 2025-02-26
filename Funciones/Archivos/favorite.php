@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include('../../Config/db.php');
 
@@ -47,4 +47,3 @@ $conn->close();
 
 header('Location: ../../Vistas/index.php');
 exit; // Siempre usar exit después de header
-?>

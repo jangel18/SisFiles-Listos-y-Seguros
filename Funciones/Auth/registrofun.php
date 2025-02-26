@@ -48,11 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_insert = $conn->prepare($sql_insert);
         $stmt_insert->bind_param("ss", $usuario, $hashed_password);
         crear_carpeta_user($usuario);
-        
+
         if ($stmt_insert->execute()) {
             $response['status'] = 'success';
             $response['message'] = 'Usuario registrado exitosamente.';
-            
         } else {
             $response['status'] = 'error';
             $response['message'] = 'Error al registrar el usuario.';

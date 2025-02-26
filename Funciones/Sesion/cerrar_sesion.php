@@ -9,4 +9,3 @@ echo json_encode([
 ]);
 header("Location: ../../Vistas/index.php");
 exit();
-?>
