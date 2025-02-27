@@ -1,0 +1,146 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 27-02-2025 a las 06:10:49
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `sisfiles`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `carpetas`
+--
+
+CREATE TABLE `carpetas` (
+  `id` int(11) NOT NULL,
+  `carpeta` varchar(50) NOT NULL,
+  `route` varchar(255) NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `favorite` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `carpetas`
+--
+
+INSERT INTO `carpetas` (`id`, `carpeta`, `route`, `fecha`, `favorite`) VALUES
+(15, 'imagenes', '../../Public/Storage/files/Angel/imagenes', '2025-02-04 20:27:47', 0),
+(16, 'Prueba', '../../Public/Storage/files/Angel2/Prueba', '2025-02-03 21:08:28', 0),
+(17, 'a', '../../Public/Storage/files/Angel2/a', '2025-02-03 21:08:31', 0),
+(18, 'hola', '../../Public/Storage/files/Angel/imagenes/hola', '2025-02-27 04:57:51', 0),
+(19, 'aver', '../../Public/Storage/files/Angel/imagenes/hola/aver', '2025-02-04 22:44:05', 0),
+(20, 'Prueba2', '../../Public/Storage/files/Angel/imagenes/Prueba2', '2025-02-27 04:27:20', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `files`
+--
+
+CREATE TABLE `files` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `type` enum('archivo','carpeta') NOT NULL,
+  `size` bigint(20) DEFAULT NULL,
+  `route` varchar(255) NOT NULL,
+  `date_creation` timestamp NOT NULL DEFAULT current_timestamp(),
+  `date_update` timestamp NOT NULL DEFAULT current_timestamp(),
+  `favorite` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `files`
+--
+
+INSERT INTO `files` (`id`, `name`, `type`, `size`, `route`, `date_creation`, `date_update`, `favorite`) VALUES
+(19, 'hola', 'archivo', 5773, '../../Public/Storage/files/Angel2/3516096.png', '2025-02-03 21:09:09', '2025-02-03 21:09:09', 0),
+(20, 'Prueba', 'archivo', 2187, '../../Public/Storage/files/Angel/imagenes/files.txt', '2025-02-04 21:45:54', '2025-02-04 21:45:54', 0),
+(21, 'a ver', 'archivo', 5773, '../../Public/Storage/files/Angel/imagenes/3516096.png', '2025-02-04 21:48:16', '2025-02-04 21:48:16', 0),
+(22, 'Prueba2', 'archivo', 5773, '../../Public/Storage/files/Angel/imagenes/hola/3516096 (1).png', '2025-02-04 22:35:00', '2025-02-04 22:35:00', 1),
+(23, 'a', 'archivo', 5773, '../../Public/Storage/files/Angel/imagenes/hola/aver/3516096.png', '2025-02-04 22:44:16', '2025-02-04 22:44:16', 0),
+(24, 'wa', 'archivo', 64891, '../../Public/Storage/files/Angel/imagenes/infrea.pdf', '2025-02-27 04:36:14', '2025-02-27 04:36:14', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `usuario`, `password`) VALUES
+(23, 'Angel', '123'),
+(24, 'Angel2', '123');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `carpetas`
+--
+ALTER TABLE `carpetas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `files`
+--
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `carpetas`
+--
+ALTER TABLE `carpetas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `files`
+--
+ALTER TABLE `files`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
