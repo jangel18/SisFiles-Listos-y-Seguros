@@ -4,7 +4,7 @@ session_start();
 include('../../Config/db.php');
 
 echo  "hola";
-if ($_POST['subir']) {
+if (isset($_POST['subir'])) {
     if (file_exists($_FILES['archivo']['tmp_name'])) {
         echo "exito";
         $usuario_name = $_SESSION['user_name'];
