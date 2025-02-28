@@ -32,6 +32,7 @@ $ruta = $_SESSION['ruta'];
 </head>
 
 <body class="bg-light">
+<?php include('header/header.php') ?>
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="text-primary">Hola <?php echo $_SESSION['user_name']; ?>, Bienvenido a SisFiles 👋</h1>

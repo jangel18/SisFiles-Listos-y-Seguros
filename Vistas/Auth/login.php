@@ -6,33 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="styles/styles.css">
+    <!--<link rel="stylesheet" href="styles/styles.css"> No se usa gracias a bootstrap   -->
 
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 
 <body>
-    <div><img src="../../Public/Storage\124837.png" alt="" width="100" height="100">
-        <h1>SisFiles</h1>
-    </div>
-    <div>
-        <h1>Inicio de sesion</h1>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="usuario">Usuario</label>
+    <?php include('header/header.php') ?>
+    
+    <div  class="container mt-5 w-50">
+        <h1 class="text-center">Inicio de sesión</h1>
+        <form id="loginForm" class="p-4 border rounded bg-light">
+            <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario</label>
                 <input type="text" class="form-control" id="usuario" name="usuario" required>
             </div>
 
-            <div class="form-group">
-                <label for="password">Contraseña</label>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
+            <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
         </form>
 
         <div id="alerta" class="mt-3"></div>
-        <div class="link"><a href="Auth/registro.php">¿Usted no está registrado? Hágalo aquí</a></div>
+        <div class="text-center mt-2"><a href="Auth/registro.php">¿Usted no está registrado? Hágalo aquí</a></div>
     </div>
     <script>
         $(document).ready(function() {
